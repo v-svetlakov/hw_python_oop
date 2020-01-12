@@ -38,16 +38,21 @@ class CashCalculator(Calculator):
     def get_today_cash_remained(self, currency):
         today_cash = self.get_today_stats()
         limit = self.limit
+        """Добавляю val к text"""
+        if currency == 'usd':
+            val = 'USD'
+        elif currency == 'eur':
+            val = 'Euro'
+        else:
+            val = 'руб'
+        """Проверка на лимит"""
         if today_cash < limit:
             balance = limit - today_cash
             if currency == 'usd':
                 balance /= self.USD_RATE
-                text = f'На сегодня осталось {round(balance, 2)} USD'
             elif currency == 'eur':
                 balance /= self.EURO_RATE
-                text = f'На сегодня осталось {round(balance, 2)} Euro'
-            else:
-                text = f'На сегодня осталось {round(balance, 2)} руб'
+            text = f'На сегодня осталось {round(balance, 2)} {val}'
 
         elif today_cash == limit:
             text = 'Денег нет, держись'
@@ -56,13 +61,13 @@ class CashCalculator(Calculator):
             balance = today_cash - limit
             if currency == 'usd':
                 balance /= self.USD_RATE
-                text = f'Денег нет, держись: твой долг - {round(balance, 2)} USD'
             elif currency == 'eur':
                 balance /= self.EURO_RATE
-                text = f'Денег нет, держись: твой долг - {round(balance, 2)} Euro'
-            else:
-                text = f'Денег нет, держись: твой долг - {round(balance, 2)} руб'
+            text = f'Денег нет, держись: твой долг - {round(balance, 2)} {val}'
         return text
+
+
+
 
 
 
